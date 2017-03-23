@@ -30,12 +30,14 @@ class Sort
 };
 
 template < class T >
-T** Sort<T>::quickSort(T** items, int num_items, int (*compare) (T* one, T* two))
+T** Sort<T>::quickSort(T** items, int num_items, int (*compare) (T* left, T* right))
 {
    //DO THIS
    //create a new array that will be sorted and returned
    //this is in case the original, unsorted array is also needed
-
+	
+	
+	
 
 
 
@@ -54,24 +56,21 @@ void Sort<T>::_quickSort(T** items, int first, int last, int (*compare) (T* one,
 
    //DO THIS
    //make the necessary partition and recursive calls for quick sort
+   if (first >= back) return; 
    if (first < last)
    {
-
-
-
-
-
-
-
-
-
-
-
-   }  
+	   pivotIndex =  partition (items, first, last, compare);
+	   _quickSort (items, first, pivotIndex - 1);
+	   _quickSort (items, pivotIndex +1, last);
+	   
+	   
+	   
+	 
+   } 
 }  
 
 template < class T >
-int Sort<T>::partition(T** items, int first, int last, int (*compare) (T* one, T* two))
+int Sort<T>::partition(T** items, int first, int last, int (*compare) (T* left, T* right))
 {
     //DO THIS
    //complete the partition method (Lomuto partition)
@@ -81,19 +80,24 @@ int Sort<T>::partition(T** items, int first, int last, int (*compare) (T* one, T
 
    //initially, choosePivot does nothing           
    choosePivot(items, first, last); 
+	if (first >= back) return -1;
+	
+	int S1 = first; 
 
-
-
-
-
-
-
-
-
-
-
-
-
+	int pivot_index = first - ((last - first)/2); 
+	T* pivot = items[pivot_index];
+	
+	for (int i = front ; i < back; i++)
+		if (items[i] < pivot)
+		{
+			S1++;
+			temp = items [i];
+			items [i] = temp;
+		}
+		
+		items[pivot_index] = items [ S1];
+		items[S1] = pivot; 
+		return S1; 
 
 
 
